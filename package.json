@@ -1,0 +1,25 @@
+{
+  "name": "discord-oauth-vercel",
+  "version": "1.0.0",
+  "description": "Discord OAuth2 bot with serverless functions",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build needed'",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "axios": "^1.6.0",
+    "qs": "^6.11.0"
+  },
+  "engines": {
+    "node": "18.x"
+  },
+  "keywords": [
+    "discord",
+    "oauth2",
+    "vercel",
+    "serverless"
+  ]
+}

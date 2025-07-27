@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord Verification</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #0f0f0f;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            overflow: hidden;
+        }
+
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .container {
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 50px;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(220, 38, 38, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 2;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+
+        .logo-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            position: relative;
+            transform-style: preserve-3d;
+        }
+
+        .logo-frame {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: #dc2626;
+            border-right-color: #b91c1c;
+            border-bottom-color: #991b1b;
+            box-shadow: 0 0 40px rgba(220, 38, 38, 0.7),
+                        inset 0 0 30px rgba(220, 38, 38, 0.5);
+            animation: rotate-frame 8s linear infinite;
+        }
+
+        @keyframes rotate-frame {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-inner {
+            position: absolute;
+            width: calc(100% - 24px);
+            height: calc(100% - 24px);
+            top: 12px;
+            left: 12px;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(15, 15, 15, 0.8);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.9);
+        }
+
+        .logo {
+            width: 90%;
+            height: 90%;
+            object-fit: cover;
+            border-radius: 50%;
+            filter: drop-shadow(0 0 20px rgba(220, 38, 38, 0.9));
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+            border: 2px solid rgba(220, 38, 38, 0.3);
+        }
+
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #ff4d4d, #dc2626);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+            letter-spacing: -1px;
+            text-shadow: 0 2px 15px rgba(220, 38, 38, 0.4);
+        }
+
+        .description {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            opacity: 0.8;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .verify-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #dc2626, #b91c1c);
+            color: white;
+            text-decoration: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px -5px rgba(220, 38, 38, 0.5);
+            position: relative;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            transform: translateZ(50px);
+            z-index: 1;
+        }
+
+        .verify-btn:hover {
+            transform: translateY(-5px) scale(1.05) translateZ(50px);
+            box-shadow: 0 15px 40px -5px rgba(220, 38, 38, 0.7);
+            background: linear-gradient(45deg, #b91c1c, #dc2626);
+        }
+
+        .verify-btn:active {
+            transform: translateY(0) scale(0.98) translateZ(50px);
+        }
+
+        .verify-btn:after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: transform 0.5s ease, opacity 0.5s ease;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .verify-btn:hover:after {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+
+        .discord-icon {
+            margin-right: 10px;
+            vertical-align: middle;
+            font-size: 1.5rem;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        .glow {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: radial-gradient(circle at center, rgba(220, 38, 38, 0.3) 0%, transparent 70%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .container:hover .glow {
+            opacity: 1;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .verify-btn {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+            
+            .logo-container {
+                width: 170px;
+                height: 170px;
+            }
+        }
+
+        /* Particle animation */
+        .particle {
+            position: absolute;
+            background: rgba(220, 38, 38, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+    
+    <div class="container">
+        <div class="glow"></div>
+        <div class="logo-container">
+            <div class="logo-frame"></div>
+            <div class="logo-inner">
+                <img src="Exceptional.png" alt="EXCEPTIONAL Logo" class="logo" />
+            </div>
+        </div>
+        <h1>VERIFY WITH US</h1>  
+        <p class="description">
+            One click is all it takes to join our exclusive community.
+            <br>Authenticate securely and get instant access.
+        </p>
+
+        <a href="https://discord.com/oauth2/authorize?client_id=1398994884454514748&response_type=code&redirect_uri=https://your-app.vercel.app/api/auth/discord/redirect&scope=identify+guilds+guilds.join" 
+           class="verify-btn">
+            <span class="discord-icon">🡆</span> VERIFY NOW
+        </a>
+    </div>
+
+    <script>
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 2px and 6px
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Add to container
+                particlesContainer.appendChild(particle);
+                
+                // Animate particle
+                animateParticle(particle);
+            }
+        }
+        
+        function animateParticle(particle) {
+            let x = Math.random() * 100;
+            let y = Math.random() * 100;
+            let xSpeed = (Math.random() - 0.5) * 0.2;
+            let ySpeed = (Math.random() - 0.5) * 0.2;
+            
+            function move() {
+                x += xSpeed;
+                y += ySpeed;
+                
+                // Bounce off edges
+                if (x <= 0 || x >= 100) xSpeed *= -1;
+                if (y <= 0 || y >= 100) ySpeed *= -1;
+                
+                particle.style.left = `${x}%`;
+                particle.style.top = `${y}%`;
+                
+                requestAnimationFrame(move);
+            }
+            
+            move();
+        }
+        
+        // Initialize particles
+        window.addEventListener('load', createParticles);
+        
+        // Button hover effect enhancement
+        const btn = document.querySelector('.verify-btn');
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            btn.style.setProperty('--x', `${x}px`);
+            btn.style.setProperty('--y', `${y}px`);
+        });
+        
+        // 3D tilt effect
+        const container = document.querySelector('.container');
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            const angleX = (y - centerY) / 20;
+            const angleY = (centerX - x) / 20;
+            
+            container.style.transform = `perspective(1000px) rotateX(${angleX}deg) rotateY(${angleY}deg)`;
+        });
+        
+        container.addEventListener('mouseleave', () => {
+            container.style.transform = 'perspective(1000px) rotateX(0) rotateY(0)';
+        });
+    </script>
+</body>
+</html>
