@@ -13,9 +13,11 @@
     "axios": "^1.6.0",
     "qs": "^6.11.0"
   },
+  {
   "engines": {
-    "node": "18.x"
-  },
+    "node": "22.x"
+  }
+},
   "keywords": [
     "discord",
     "oauth2",
